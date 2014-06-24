@@ -1,0 +1,9 @@
+*/
+!common/
+!common/*
+!monobook/
+!monobook/*
+!vector/
+!vector/*
+
+*.php
