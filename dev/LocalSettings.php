@@ -147,6 +147,8 @@ require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php" );
 # End of automatically generated settings.
 # Add more configuration options below.
 
+$wgUseTeX = true;
+
 require_once("$IP/extensions/MobileFrontend/MobileFrontend.php");
 #require_once( "$IP/extensions/Redirect/Redirect.php" );
 require_once("$IP/extensions/Cite/Cite.php");
