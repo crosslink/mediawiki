@@ -15,7 +15,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
-$wgShowExceptionDetails = true;
+#$wgShowExceptionDetails = true;
+#$wgShowSQLErrors = true;
+#$wgDebugDumpSql  = true;
+#$wgShowDBErrorBacktrace = true;
 
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
@@ -28,10 +31,10 @@ $wgSitename = "wikipedia";
 ## (like /w/index.php/Page_title to /wiki/Page_title) please see:
 ## http://www.mediawiki.org/wiki/Manual:Short_URL
 #$wgScriptPath = "/releases/mediawiki-1.23.0/";
-$wgScriptPath = "/w";
+$wgScriptPath = "/" . $wgLanguageCode . "wiki";
 $wgScriptExtension = ".php";
 
-#$wgArticlePath = "/wiki/$1";
+#$wgArticlePath = "/" . $wgLanguageCode . "wiki/$1";
 
 #$wgScriptPath       = "";
 #$wgScript           = "$wgScriptPath/index.php";
@@ -65,7 +68,7 @@ $wgEmailAuthentication = true;
 ## Database settings
 $wgDBtype = "mysql";
 $wgDBserver = "localhost";
-$wgDBname = "wikipedia";
+$wgDBname = "wikipedia_" . $wgLanguageCode;
 $wgDBuser = "root";
 $wgDBpassword = "";
 
@@ -107,12 +110,9 @@ $wgShellLocale = "en_US.utf8";
 ## be publically accessible from the web.
 #$wgCacheDirectory = "$IP/cache";
 
-# Site language code, should be one of the list in ./languages/Names.php
-$wgLanguageCode = "zh";
+$wgVariantArticlePath = "/" . $wgLanguageCode . "$2/$1";
 
-$wgVariantArticlePath = "/$2/$1";
-
-$wgDefaultLanguageVariant = "zh-tw";
+#$wgDefaultLanguageVariant = "zh-tw";
 
 $wgSecretKey = "cf479df8b65f76162de9e1b2defac64fa22305c18beef81306e69d519363ce5f";
 
@@ -142,7 +142,8 @@ $wgTidyBin = '/usr/bin/tidy';
 # Add more configuration options below.
 
 require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php" );
-
+$wgMaxPPNodeCount = 10000000;
+$wgMaxGeneratedPPNodeCount = 10000000;
 
 # End of automatically generated settings.
 # Add more configuration options below.
@@ -165,13 +166,27 @@ require_once( "$IP/extensions/ImageMap/ImageMap.php" );
 require_once( "$IP/extensions/Interwiki/Interwiki.php" );
 require_once( "$IP/extensions/Math/Math.php" );
 // Set this if you don't use MediaWiki Math's texvc:
-$wgTexvc =  '/usr/bin/texvc';
+// which we should no't use the system math texvc
+//$wgTexvc =  '/usr/bin/texvc';
  
 // Be sure to have a math directory with writing
 // permission and that these two variables are set or
 // default to that directory:
-$wgMathDirectory = '/data/mediawiki/math';
-$wgMathPath = 'http://localhost/math';
+#$wgUploadPath = "{$wgScriptPath}/images";
+#$wgUploadDirectory = "{$IP}/images";
+#$wgMathPath = "{$wgUploadPath}/math";
+
+$wgMathDirectory = '/data2/mediawiki/math-all/' . $wgLanguageCode;
+$wgMathPath = 'http://localhost/math-all/' . $wgLanguageCode;
+#$wgMathPath = $wgMathDirectory;
+
+#$wgTmpDirectory = "{$wgUploadDirectory}/tmp";
+#$wgTmpDirectory = $wgMathDirectory;
+
+#$wgUseLaTeXML = true;
+#$wgMathValidModes[] = MW_MATH_LATEXML; // adding LaTeXML as rendering option
+// Set LaTeXML as default rendering option;
+#$wgDefaultUserOptions['math'] = MW_MATH_LATEXML;
 
 require_once( "$IP/extensions/LanguageSelector/LanguageSelector.php" );
 #require_once( "$IP/extensions/LanguageTag/LanguageTag.php" );
